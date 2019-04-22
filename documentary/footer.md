@@ -4,8 +4,10 @@
 
 ## Copyright
 
-(c) [À La Mode][1] 2019
+Original Authors: [Mozilla](https://github.com/mozilla/source-map/)
 
-[1]: https://alamode.cc
+---
+
+<ÀLaModeFooter />
 
 %~ -1%
