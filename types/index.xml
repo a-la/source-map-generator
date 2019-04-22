@@ -1,10 +1,41 @@
-<types namespace="_@a-la/source-map-generator">
+<types namespace="_sourceMapGenerator">
   <type name="Config" desc="Options for the program.">
-    <prop boolean name="shouldRun" default="true">
-      A boolean option.
+    <prop string name="file" opt>
+      The filename of the generated source.
     </prop>
-    <prop string name="text">
-      A text to return.
+    <prop string name="sourceRoot" opt>
+      A root for all relative URLs in this source map.
+    </prop>
+    <prop boolean name="skipValidation" default="false">
+      When `true`, disables validation of mappings as they are added. This can improve performance but should be used with discretion, as a last resort. Even then, one should avoid using this flag when running tests, if possible.
+    </prop>
+  </type>
+  <type name="Position" desc="The position of a token.">
+    <prop number name="line">
+      The line number.
+    </prop>
+    <prop number name="column">
+      The column number.
+    </prop>
+  </type>
+  <type name="Mapping">
+    <prop string name="source">
+      The source file.
+    </prop>
+    <prop number name="generatedLine">
+      The generated line number.
+    </prop>
+    <prop number name="generatedColumn">
+      The generated column number.
+    </prop>
+    <prop number name="originalLine">
+      The original line number.
+    </prop>
+    <prop number name="originalColumn">
+      The original column number.
+    </prop>
+    <prop type="?string" name="name">
+      The name of the mapping.
     </prop>
   </type>
 </types>

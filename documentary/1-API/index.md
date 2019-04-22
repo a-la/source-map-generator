@@ -8,16 +8,25 @@ import sourceMapGenerator from '@a-la/source-map-generator'
 
 %~%
 
-```## sourceMapGenerator
+## `class SourceMapGenerator`
+
+An instance of the SourceMapGenerator represents a source map which is being built incrementally.
+
+**Removed Methods For Now**
+
+- [x] `static fromSourceMap`
+- [x] `applySourceMap`
+
+
+```### constructor
 [
-  ["arg1", "string"],
-  ["arg2?", "boolean"]
+  ["conf", "Config"]
 ]
 ```
 
-Call this function to get the result you want.
+The constructor method is called to create a new source map.
 
-%TYPEDEF types/index.xml%
+%TYPEDEF types/index.xml Config%
 
 %EXAMPLE: example, ../src => @a-la/source-map-generator%
 %FORK example%
