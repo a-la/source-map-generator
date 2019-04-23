@@ -8,7 +8,7 @@ import { relative, toSetString, compareByGeneratedPositionsInflated } from './ut
 import ArraySet from './array-set'
 import MappingList from './mapping-list'
 
-class SourceMapGenerator {
+export default class SourceMapGenerator {
   /**
    * An instance of the SourceMapGenerator represents a source map which is being built incrementally.
    * @param {_sourceMapGenerator.Config} conf Options for the program.
@@ -24,6 +24,7 @@ class SourceMapGenerator {
     this._sources = new ArraySet()
     this._names = new ArraySet()
     this._mappings = new MappingList()
+    /** @type {?Object<string, string>} */
     this._sourcesContents = null
   }
 
@@ -35,25 +36,24 @@ class SourceMapGenerator {
    *   - source: The original source file (relative to the sourceRoot).
    *   - name: An optional original token name for this mapping.
    *
-   * @param {{generated: !Position, original: ?Position, source: ?string, name: ?string }} conf
+   * @param {{generated: !_sourceMapGenerator.Position, original: (?_sourceMapGenerator.Position|undefined), source: (?string|undefined), name: (?string|undefined) }} mapping
    */
   addMapping(mapping) {
     let { generated, original = null, source = null, name = null } = mapping
     if (!generated) throw new Error('"generated" is a required argument')
 
-    if (!this._skipValidation) {
+    if (!this._skipValidation)
       this._validateMapping(generated, original, source, name)
-    }
 
-    if (source != null) {
-      source = String(source)
+    if (source) {
+      source = `${source}`
       if (!this._sources.has(source)) {
         this._sources.add(source)
       }
     }
 
-    if (name != null) {
-      name = String(name)
+    if (name) {
+      name = `${name}`
       if (!this._names.has(name)) {
         this._names.add(name)
       }
@@ -62,8 +62,8 @@ class SourceMapGenerator {
     this._mappings.add({
       generatedLine: generated.line,
       generatedColumn: generated.column,
-      originalLine: original != null && original.line,
-      originalColumn: original != null && original.column,
+      originalLine: original ? original.line : null,
+      originalColumn: original ? original.column : null,
       source,
       name,
     })
@@ -71,20 +71,22 @@ class SourceMapGenerator {
 
   /**
    * Set the source content for a source file.
+   * @param {string} sourceFile
+   * @param {string} [sourcesContent]
    */
-  setSourceContent(aSourceFile, aSourceContent) {
-    let source = aSourceFile
+  setSourceContent(sourceFile, sourcesContent) {
+    let source = sourceFile
     if (this._sourceRoot != null) {
       source = relative(this._sourceRoot, source)
     }
 
-    if (aSourceContent != null) {
+    if (sourcesContent) {
       // Add the source content to the _sourcesContents map.
       // Create a new _sourcesContents map if the property is null.
       if (!this._sourcesContents) {
         this._sourcesContents = Object.create(null)
       }
-      this._sourcesContents[toSetString(source)] = aSourceContent
+      this._sourcesContents[toSetString(source)] = sourcesContent
     } else if (this._sourcesContents) {
       // Remove the source file from the _sourcesContents map.
       // If the _sourcesContents map is empty, set the property to null.
@@ -105,13 +107,17 @@ class SourceMapGenerator {
    *
    * To maintain consistency, we validate that any new mapping being added falls
    * in to one of these categories.
-   * @param {!Position} generated
-   * @param {Position} original
+   * @param {_sourceMapGenerator.Position} generated The position of a token.
+   * @param {number} generated.line The line number.
+   * @param {number} generated.column The column number.
+   * @param {?_sourceMapGenerator.Position} original The position of a token.
+   * @param {number} original.line The line number.
+   * @param {number} original.column The column number.
    * @param {?string} source
    * @param {?string} name
    */
   _validateMapping(generated, original, source, name) {
-    // When aOriginal is truthy but has empty values for .line and .column,
+    // When original is truthy but has empty values for .line and .column,
     // it is most likely a programmer error. In this case we throw a very
     // specific error message to try to guide them the right way.
     // For example: https://github.com/Polymer/polymer-bundler/pull/519
@@ -146,8 +152,7 @@ class SourceMapGenerator {
   }
 
   /**
-   * Serialize the accumulated mappings in to the stream of base 64 VLQs
-   * specified by the source map format.
+   * Serialize the accumulated mappings in to the stream of base 64 VLQs specified by the source map format.
    */
   _serializeMappings() {
     let previousGeneratedColumn = 0
@@ -180,27 +185,27 @@ class SourceMapGenerator {
         next += ","
       }
 
-      next += base64VLQ.encode(mapping.generatedColumn
+      next += base64VLQ(mapping.generatedColumn
                                  - previousGeneratedColumn)
       previousGeneratedColumn = mapping.generatedColumn
 
       if (mapping.source != null) {
         sourceIdx = this._sources.indexOf(mapping.source)
-        next += base64VLQ.encode(sourceIdx - previousSource)
+        next += base64VLQ(sourceIdx - previousSource)
         previousSource = sourceIdx
 
         // lines are stored 0-based in SourceMap spec version 3
-        next += base64VLQ.encode(mapping.originalLine - 1
+        next += base64VLQ(mapping.originalLine - 1
                                    - previousOriginalLine)
         previousOriginalLine = mapping.originalLine - 1
 
-        next += base64VLQ.encode(mapping.originalColumn
+        next += base64VLQ(mapping.originalColumn
                                    - previousOriginalColumn)
         previousOriginalColumn = mapping.originalColumn
 
         if (mapping.name != null) {
           nameIdx = this._names.indexOf(mapping.name)
-          next += base64VLQ.encode(nameIdx - previousName)
+          next += base64VLQ(nameIdx - previousName)
           previousName = nameIdx
         }
       }
@@ -212,8 +217,8 @@ class SourceMapGenerator {
   }
 
   /**
-   * @param {} sources
-   * @param {string} sourceRoot
+   * @param {!Array<string>} sources
+   * @param {string} [sourceRoot]
    */
   _generateSourcesContent(sources, sourceRoot) {
     return sources.map(function(source) {
@@ -288,10 +293,10 @@ SourceMapGenerator.prototype._version = 3
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {Object} _sourceMapGenerator.Mapping
- * @prop {string} source The source file.
+ * @prop {?string} source The source file.
  * @prop {number} generatedLine The generated line number.
  * @prop {number} generatedColumn The generated column number.
- * @prop {number} originalLine The original line number.
- * @prop {number} originalColumn The original column number.
+ * @prop {?number} originalLine The original line number.
+ * @prop {?number} originalColumn The original column number.
  * @prop {?string} name The name of the mapping.
  */

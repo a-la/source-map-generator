@@ -10,6 +10,6 @@ _sourceMapGenerator.Config
  */
 _sourceMapGenerator.Position
 /**
- * @typedef {{ source: string, generatedLine: number, generatedColumn: number, originalLine: number, originalColumn: number, name: ?string }}
+ * @typedef {{ source: ?string, generatedLine: number, generatedColumn: number, originalLine: ?number, originalColumn: ?number, name: ?string }}
  */
 _sourceMapGenerator.Mapping

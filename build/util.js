@@ -3,14 +3,14 @@
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
-import { URL } from 'url'
+const { URL } = require('url');
 
 function identity(s) {
   return s
 }
 
-export const toSetString = identity
-export const fromSetString = identity
+       const toSetString = identity
+       const fromSetString = identity
 
 /**
  * @param {?string} aStr1
@@ -41,7 +41,7 @@ function strcmp(aStr1, aStr2) {
  * @param {!_sourceMapGenerator.Mapping} mappingA
  * @param {!_sourceMapGenerator.Mapping} mappingB
  */
-export function compareByGeneratedPositionsInflated(mappingA, mappingB) {
+       function compareByGeneratedPositionsInflated(mappingA, mappingB) {
   let cmp = mappingA.generatedLine - mappingB.generatedLine
   if (cmp !== 0) {
     return cmp
@@ -74,7 +74,7 @@ export function compareByGeneratedPositionsInflated(mappingA, mappingB) {
  * Strip any JSON XSSI avoidance prefix from the string (as documented in the source maps specification), and then parse the string as JSON.
  * @param {string} str
  */
-export function parseSourceMapInput(str) {
+       function parseSourceMapInput(str) {
   return JSON.parse(str.replace(/^\)]}'[^\n]*\n/, ""))
 }
 
@@ -228,7 +228,7 @@ const trimFilename = createSafeHandler(url => {
  * @param {function(!URL)} urlCallback
  * @return A normalized URL value.
  */
-export const normalize = createSafeHandler(urlCallback => {})
+       const normalize = createSafeHandler(urlCallback => {})
 
 /**
  * Joins two paths/URLs.
@@ -239,7 +239,7 @@ export const normalize = createSafeHandler(urlCallback => {})
  * @param aPath The path or URL to be joined with the root.
  * @return A joined and normalized URL value.
  */
-export function join(aRoot, aPath) {
+       function join(aRoot, aPath) {
   const pathType = getURLType(aPath)
   const rootType = getURLType(aRoot)
 
@@ -280,7 +280,7 @@ export function join(aRoot, aPath) {
  * @param {string} targetURL The path or URL to be made relative to rootURL.
  * @return A rootURL-relative (if possible), normalized URL value.
  */
-export function relative(rootURL, targetURL) {
+       function relative(rootURL, targetURL) {
   const result = relativeIfPossible(rootURL, targetURL)
 
   return typeof result == "string" ? result : normalize(targetURL)
@@ -321,7 +321,7 @@ function relativeIfPossible(rootURL, targetURL) {
  * Compute the URL of a source given the the source root, the source's
  * URL, and the source map's URL.
  */
-export function computeSourceURL(sourceRoot, sourceURL, sourceMapURL) {
+       function computeSourceURL(sourceRoot, sourceURL, sourceMapURL) {
   // The source map spec states that "sourceRoot" and "sources" entries are to be appended. While
   // that is a little vague, implementations have generally interpreted that as joining the
   // URLs with a `/` between then, assuming the "sourceRoot" doesn't already end with one.
@@ -357,3 +357,12 @@ export function computeSourceURL(sourceRoot, sourceURL, sourceMapURL) {
  * @suppress {nonStandardJsDocs}
  * @typedef {import('.').Mapping} _sourceMapGenerator.Mapping
  */
+
+module.exports.toSetString = toSetString
+module.exports.fromSetString = fromSetString
+module.exports.compareByGeneratedPositionsInflated = compareByGeneratedPositionsInflated
+module.exports.parseSourceMapInput = parseSourceMapInput
+module.exports.normalize = normalize
+module.exports.join = join
+module.exports.relative = relative
+module.exports.computeSourceURL = computeSourceURL

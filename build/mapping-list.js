@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import { compareByGeneratedPositionsInflated } from './util'
+const { compareByGeneratedPositionsInflated } = require('./util');
 
 /**
  * Determine whether mappingB is after mappingA with respect to generated position.
@@ -24,7 +24,7 @@ function generatedPositionAfter(mappingA, mappingB) {
  * A data structure to provide a sorted view of accumulated mappings in a
  * performance conscious manner. It trades a negligible overhead in general case for a large speedup in case of mappings being added in order.
  */
-export default class MappingList {
+               class MappingList {
   constructor() {
     /** @type {!Array<_sourceMapGenerator.Mapping>} */
     this._array = []
@@ -77,3 +77,5 @@ export default class MappingList {
  * @suppress {nonStandardJsDocs}
  * @typedef {import('.').Mapping} _sourceMapGenerator.Mapping
  */
+
+module.exports = MappingList

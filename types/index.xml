@@ -19,7 +19,7 @@
     </prop>
   </type>
   <type name="Mapping">
-    <prop string name="source">
+    <prop type="?string" name="source">
       The source file.
     </prop>
     <prop number name="generatedLine">
@@ -28,10 +28,10 @@
     <prop number name="generatedColumn">
       The generated column number.
     </prop>
-    <prop number name="originalLine">
+    <prop type="?number" name="originalLine">
       The original line number.
     </prop>
-    <prop number name="originalColumn">
+    <prop type="?number" name="originalColumn">
       The original column number.
     </prop>
     <prop type="?string" name="name">
