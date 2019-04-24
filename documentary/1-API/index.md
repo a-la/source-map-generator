@@ -18,7 +18,7 @@ An instance of the SourceMapGenerator represents a source map which is being bui
 - [x] `applySourceMap`
 
 
-```### constructor
+```### constructor => SourceMapGenerator
 [
   ["conf", "Config"]
 ]
@@ -29,6 +29,6 @@ The constructor method is called to create a new source map.
 %TYPEDEF types/index.xml Config%
 
 %EXAMPLE: example, ../src => @a-la/source-map-generator%
-%FORK example%
+%FORK-js example%
 
 %~%
