@@ -1,6 +1,6 @@
 {
   "name": "@a-la/source-map-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "[fork] Generates Source Maps, Works With Google Closure Compiler.",
   "main": "build/index.js",
   "module": "src/index.js",
