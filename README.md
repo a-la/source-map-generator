@@ -17,7 +17,9 @@ yarn add @a-la/source-map-generator
     * [`_sourceMapGenerator.Config`](#type-_sourcemapgeneratorconfig)
 - [Copyright](#copyright)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/0.svg?sanitize=true">
+</a></p>
 
 ## API
 
@@ -27,7 +29,9 @@ The package is available by importing its default function:
 import sourceMapGenerator from '@a-la/source-map-generator'
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+</a></p>
 
 ## `class SourceMapGenerator`
 
@@ -39,17 +43,17 @@ An instance of the SourceMapGenerator represents a source map which is being bui
 - [x] `applySourceMap`
 
 
-### `constructor(`<br/>&nbsp;&nbsp;`conf: Config,`<br/>`): SourceMapGenerator`
+### <code><ins>constructor</ins>(</code><sub><br/>&nbsp;&nbsp;`conf: Config,`<br/></sub><code>): <i>SourceMapGenerator</i></code>
 
 The constructor method is called to create a new source map.
 
-__<a name="type-_sourcemapgeneratorconfig">`_sourceMapGenerator.Config`</a>__: Options for the program.
+<strong><a name="type-_sourcemapgeneratorconfig">`_sourceMapGenerator.Config`</a></strong>: Options for the program.
 
-|      Name      |   Type    |                                                                                                           Description                                                                                                           | Default |
-| -------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| file           | _string_  | The filename of the generated source.                                                                                                                                                                                           | -       |
-| sourceRoot     | _string_  | A root for all relative URLs in this source map.                                                                                                                                                                                | -       |
-| skipValidation | _boolean_ | When `true`, disables validation of mappings as they are added. This can improve performance but should be used with discretion, as a last resort. Even then, one should avoid using this flag when running tests, if possible. | `false` |
+|      Name      |       Type       |                                                                                                           Description                                                                                                           | Default |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| file           | <em>string</em>  | The filename of the generated source.                                                                                                                                                                                           | -       |
+| sourceRoot     | <em>string</em>  | A root for all relative URLs in this source map.                                                                                                                                                                                | -       |
+| skipValidation | <em>boolean</em> | When `true`, disables validation of mappings as they are added. This can improve performance but should be used with discretion, as a last resort. Even then, one should avoid using this flag when running tests, if possible. | `false` |
 
 ```js
 import SourceMapGenerator from '@a-la/source-map-generator'
@@ -113,7 +117,9 @@ console.log(sourceMap)
    [ 'import SourceMapGenerator from \'../src\'\nimport { readFileSync } from \'fs\'\n\nconst file = `${readFileSync(__filename)}`\n\nconst gen = new SourceMapGenerator({\n  file: \'example/index.js\',\n})\n/**\n * Generate the source map for the file, keeping all positions as they are.\n *\n * The first two rules will update inline and block comments to not have any tokens in them.\n * The third rule will break each line into tokens and add mappings.\n */\nconst linesInSource = file\n  .replace(/\\/\\*(?:[\\s\\S]+?)\\*\\//g, (match, pos) => {\n    const next = file[pos + match.length]\n    if (next == \'\\n\') return \'\\n\'.repeat(match.split(\'\\n\').length - 1)\n\n    const lines = match.split(\'\\n\')\n    const lastLineI = lines.length - 1\n    const lastLine = lines[lastLineI]\n    const ss = \' \'.repeat(lastLine.length)\n    const ws = \'\\n\'.repeat(lastLineI)\n    return `${ws}${ss}`\n  })\n  .replace(/\\/\\/(.+)/gm, (match) => {\n    return \' \'.repeat(match.length)\n  })\n  .split(\'\\n\')\nlinesInSource.forEach((l, i) => {\n  const line = i + 1\n  l\n    .replace(/(?:(?:\\s+)|(?:[$_\\w\\d]+)|.)/g, (match, column) => {\n      if (column == 0 && /^\\s+$/.test(match)) return\n      const generated = {\n        line,\n        column,\n      }\n      const m = {\n        generated,\n        source: __filename,\n        original: generated,\n      }\n      gen.addMapping(m)\n    })\n})\ngen.setSourceContent(__filename, file)\nconst sourceMap = gen.toJSON()\nconsole.log(sourceMap)' ] }
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
+</a></p>
 
 ## Copyright
 
@@ -125,18 +131,21 @@ Original Authors: [Mozilla](https://github.com/mozilla/source-map/)
   <tr>
     <th>
       <a href="https://artd.eco">
-        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
+        <img width="100" src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png"
+          alt="Art Deco">
       </a>
     </th>
     <th>© <a href="https://artd.eco">Art Deco</a> for <a href="https://alamode.cc">À La Mode</a> 2019</th>
     <th>
       <a href="https://www.technation.sucks" title="Tech Nation Visa">
-        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
-          alt="Tech Nation Visa" />
+        <img width="100" src="https://raw.githubusercontent.com/idiocc/cookies/master/wiki/arch4.jpg"
+          alt="Tech Nation Visa">
       </a>
     </th>
     <th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th>
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/-1.svg?sanitize=true">
+</a></p>

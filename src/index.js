@@ -1,8 +1,9 @@
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/**
+ * @license Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
+
 import base64VLQ from './base64-vlq'
 import { relative, toSetString, compareByGeneratedPositionsInflated } from './util'
 import ArraySet from './array-set'

@@ -15,16 +15,16 @@
     "b": "alamode src -o build -s",
     "d": "yarn-s d1 externs",
     "d1": "typal src -c",
-    "externs": "typal externs.js -e",
+    "externs": "typal types/externs.js",
     "build": "yarn-s d b doc",
     "e": "alanode"
   },
   "files": [
     "build",
     "src",
-    "externs.js"
+    "types/externs.js"
   ],
-  "externs": "externs.js",
+  "externs": "types/externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/a-la/source-map-generator.git"
@@ -40,10 +40,10 @@
   },
   "homepage": "https://github.com/a-la/source-map-generator#readme",
   "devDependencies": {
-    "alamode": "^1.9.3",
-    "documentary": "^1.24.1",
+    "alamode": "^2.4.0",
+    "documentary": "^1.32.1",
     "eslint-config-artdeco": "1.0.1",
     "yarn-s": "1.1.0",
-    "zoroaster": "^3.11.6"
+    "zoroaster": "^4.1.1-alpha"
   }
 }
