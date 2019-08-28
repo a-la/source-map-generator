@@ -1,14 +1,15 @@
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/**
+ * @license Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
+
 const base64VLQ = require('./base64-vlq');
 const { relative, toSetString, compareByGeneratedPositionsInflated } = require('./util');
 const ArraySet = require('./array-set');
 const MappingList = require('./mapping-list');
 
-               class SourceMapGenerator {
+class SourceMapGenerator {
   /**
    * An instance of the SourceMapGenerator represents a source map which is being built incrementally.
    * @param {_sourceMapGenerator.Config} conf Options for the program.

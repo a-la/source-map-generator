@@ -56,7 +56,7 @@ function toVLQSigned(value) {
 /**
  * Returns the base 64 VLQ encoded value.
  */
-               function base64VLQ_encode(aValue) {
+function base64VLQ_encode(aValue) {
   let encoded = ""
   let digit
 

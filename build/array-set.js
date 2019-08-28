@@ -7,7 +7,7 @@
 /**
  * A data structure which is a combination of an array and a set. Adding a new member is O(1), testing for membership is O(1), and finding the index of an element is O(1). Removing elements from the set is not supported. Only strings are supported for membership.
  */
-               class ArraySet {
+class ArraySet {
   constructor() {
     /** @type {!Array<string>} */
     this._array = []

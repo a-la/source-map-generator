@@ -24,7 +24,7 @@ function generatedPositionAfter(mappingA, mappingB) {
  * A data structure to provide a sorted view of accumulated mappings in a
  * performance conscious manner. It trades a negligible overhead in general case for a large speedup in case of mappings being added in order.
  */
-               class MappingList {
+class MappingList {
   constructor() {
     /** @type {!Array<_sourceMapGenerator.Mapping>} */
     this._array = []
